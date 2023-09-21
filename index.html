@@ -5,6 +5,8 @@
         <script src="https://unpkg.com/jspsych@7.3.3"></script>
         <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
         <link href="https://unpkg.com/jspsych@7.3.3/css/jspsych.css" rel="stylesheet" type="text/css" /> 
+        <script src="https://unpkg.com/@jspsych/plugin-survey-text@1.1.2"></script>
+        <script src="jspsych/modified-image-plugin.js"></script>
     </head>
     <body>
 
@@ -12,13 +14,57 @@
     <script>
             const jsPsych = initJsPsych();
 
-            const hello_trial = {
+            var sentence = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: 'You are more than a Boolean Datatype!',
-      choices: ['Y','N'],
-      trial_duration: 1000
+      stimulus: 'I want to see a foobly mipp.',
+      choices: [' '],
     }
 
-    jsPsych.run([hello_trial]);
+    var attention = {
+        type: jsPsychSurveyText,
+        questions: [{prompt:"Type an ONE novel word from the previors sentence:"}]
+    }
+
+    var association = {
+        type: jsPsychSurveyText,
+        questions: [{prompt:"foobly"}]
+    }
+
+    var fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '+',
+      choices: "NO_KEYS",
+      trial_duration: 500,
+    }
+
+    var image = {
+        type: jsPsychImageKeyboardResponse,
+        stimulus: "Images/applehorse.png",
+        trial_duration: 500,
+        stimulus_width: 500,
+        mantain_aspect_ratio: true,
+        prompt: "<br><br>"
+    }
+
+    var prime = {
+        type: jsPsychImageKeyboardResponse,
+        stimulus: "Images/applehorse.png",
+        trial_duration: 500,
+        choices: "NO_KEYS",
+        stimulus_width: 500,
+        mantain_aspect_ratio: true,
+        prompt: "<br>foobly<br>"
+    }
+
+    var target = {
+        type: jsPsychImageKeyboardResponse,
+        stimulus: "Images/applehorse.png",
+        choices: ['A', 'L'],
+        stimulus_width: 500,
+        mantain_aspect_ratio: true,
+        prompt: "<br>apple<br>"
+    }
+
+    jsPsych.run([sentence, attention, association, fixation, image, prime, target]);
     </script>
 </html>
