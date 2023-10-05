@@ -57,7 +57,6 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: jsPsych.timelineVariable('sentence'),
       choices: [' '],
-      trial_duration: 10,
       on_finish: function(data) {
         sentence_number = (sentence_number + 1) % 40;
         console.log("sentence_number= " + sentence_number);
@@ -155,7 +154,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '+',
       choices:"NO_KEYS",
-      trial_duration: 10,
+      trial_duration: 500,
       data: {
         typeoftrial: 'fixation',
     },
@@ -165,7 +164,7 @@
         type: jsPsychImageKeyboardResponse,
         stimulus: jsPsych.timelineVariable('image_path'),
         choices:"NO_KEYS",
-        trial_duration: 10,
+        trial_duration: 500,
         stimulus_width: 500,
         mantain_aspect_ratio: true,
         prompt: "<span style = 'font-size:200%'><br><br></span>",
@@ -188,7 +187,7 @@
     var prime = {
         type: jsPsychImageKeyboardResponse,
         stimulus: jsPsych.timelineVariable('image_path'),
-        trial_duration: 10,
+        trial_duration: 300,
         choices:"NO_KEYS",
         stimulus_width: 500,
         mantain_aspect_ratio: true,
