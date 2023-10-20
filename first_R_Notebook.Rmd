@@ -1,0 +1,59 @@
+---
+title: "First jsPsych Experiment"
+author: "Nick Werner"
+date: "2023-10-17"
+output: html_document
+---
+
+# install packages
+
+```{r}
+# install.packages("tidyverse")
+```
+
+# load packages
+
+```{r}
+library(tidyverse)
+```
+
+# plot iris
+
+```{r}
+ggplot(data = iris)+
+  geom_point(mapping = aes(x = Petal.Width, y = Petal.Length, color = Species, size = Species, shape = Species))
+```
+
+```{r}
+ggplot(data = iris)+
+  geom_point(mapping = aes(x = Sepal.Width, y = Sepal.Length, color = Species,))
+```
+
+```{r}
+ggplot(data = iris)+
+  geom_col(mapping = aes(x = Species, y = Petal.Length), fill = "darkgreen")+
+  theme_classic
+```
+
+# load class data
+
+```{r}
+savic = read_csv("class_data.csv")
+```
+
+# basic info
+```{r}
+
+nrow(savic)
+
+ncol(savic)
+
+colnames(savic)
+```
+
+# histogram of RT
+```{r}
+ggplot(data = savic) +
+  geom_histogram(mapping = aes(x= as.numeric(rt)))
+```
+
