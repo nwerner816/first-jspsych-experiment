@@ -207,5 +207,109 @@ women %>%
 women_model = lm(data = women, height ~ weight)
 
 summary(women_model)
+
+sd(women$height)
+sd(women$weight)
+
+women = women %>%
+  mutate(z_height = scale(height),
+         z_weight = scale(weight))
+
+mean(women$z_height)
+mean(women$z_weight)
+
+sd(women$z_height)
+sd(women$z_weight)
+
+women_model_2 = lm(data = women, z_height ~ z_weight)
+summary(women_model_2)
+
+women %>%
+  summarise(r = cor(z_height, z_weight))
+
+women %>%
+  summarise(r = cor(height, weight))
+```
+
+# Return to Iris
+```{r}
+data("iris")
+View(iris)
+```
+
+# t-test
+```{r}
+iris_subset = iris %>%
+  filter(Species %in% c("setosa", "virginica"))
+
+  ggplot(data = iris_subset)+
+    geom_boxplot(mapping = aes(x = Species, y = Petal.Length))
+
+iris_subset_lm = lm(data = iris_subset, Petal.Length ~ Species)
+summary(iris_subset_lm)
+
+t.test(Petal.Length ~ Species, data = iris_subset)
+```
+
+# One-Way ANOVA
+```{r}
+full_iris_model = lm(data = iris, Petal.Length ~ Species)
+summary(full_iris_model)
+full_iris_aov = aov(data = iris, Petal.Length ~ Species)
+summary(full_iris_aov)
+
+#install.packages("emmeans")
+emmeans::emmeans(full_iris_model,
+                 pairwise ~ Species,
+                 adjust="tukey")
+```
+
+```{r}
+#install.packages("performance", dependencies = TRUE)
+#install.packages("see", dependencies = TRUE)
+#install.packages("patchwork", dependencies = TRUE)
+
+library(performance)
+check_model(full_iris_model)
+```
+
+# job satisfaction plot
+```{r}
+#install.packages("datarium")
+
+data("jobsatisfaction", package = "datarium")
+View(jobsatisfaction)
+
+ggplot(data= jobsatisfaction)+
+  geom_boxplot(mapping = aes(x= gender, y= score, fill= education_level))
+```
+
+#job satisfaciton model
+```{r}
+#install.packages("car")
+job_model = lm(data = jobsatisfaction,
+               score ~ gender + education_level +gender:education_level)
+summary(job_model)
+car::Anova(job_model)
+
+emmeans::emmeans(job_model,
+                 pairwise ~ gender | education_level,
+                 adjust="tukey")
+performance::check_model(job_model)
+```
+
+#class data
+```{r}
+rt_lm_model = lm(data= priming_data, rt ~ type + relatedness +type:relatedness)
+summary(rt_lm_model)
+car::Anova(rt_lm_model)
+performance::check_model(rt_lm_model)
+
+#install.packages("lmerTest")
+library(lmerTest)
+rt_model = lmer(data = priming_data,
+                rt ~ relatedness*type + (1|ID))
+summary(rt_model)
+car::Anova(rt_model)
 ```
 
