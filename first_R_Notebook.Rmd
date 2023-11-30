@@ -313,3 +313,16 @@ summary(rt_model)
 car::Anova(rt_model)
 ```
 
+```{r}
+jobsatisfaction_sum = jobsatisfaction %>%
+  group_by (education_level, gender) %>%
+  summarize(mean_score = mean(score), sd_score = sd(score))
+
+ggplot(data = jobsatisfaction_sum, mapping = aes(x = education_level, y = mean_score, fill = gender))+
+geom_col(position = "dodge")+
+  geom_errorbar(aes(ymin = mean_score-sd_score,
+                    ymax = mean_score+sd_score),
+                width = 0.25,
+                position = position_dodge(width=0.9))
+```
+
